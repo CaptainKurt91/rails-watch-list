@@ -1,7 +1,7 @@
 <div class="conatiner">
   <h1 class="text-center">Movie lists</h1>
-  <p class="btn btn-primary"><%= link_to 'Create list', new_list_path %></p>
+  <%= link_to 'Create list', new_list_path, class:"btn btn-primary" %>
   <% @lists.each do |list| %>
-  <h3 class="text-center"><%= list.name %></h3>
+  <%= link_to list.name, list_path(list), class:"btn btn-primary" %>
   <% end %>
 </div>
