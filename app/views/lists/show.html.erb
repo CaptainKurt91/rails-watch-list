@@ -1,2 +1,15 @@
 <h2><%= @list.name %></h2>
+<p><strong>Movies</strong></p>
+<ol class="list-group">
+  <% @list.movies.each do |movie| %>
+    <li><%= movie.title %> - <%= movie.overview %></li>
+     <%=
+     link_to 'Delete movie',
+     bookmark_path(list), # need find the right path so it redirects to the list
+     data: {turbo_method: :delete, turbo_confirm: "Are you sure?"},
+      class:"btn btn-primary"
+      %>
+  <% end %>
+</ol>
  <%= link_to 'Add movie', new_list_bookmark_path(@list), class:"btn btn-primary" %>
+ <%= link_to 'Return to lists', lists_path(@list), class:"btn btn-primary" %>

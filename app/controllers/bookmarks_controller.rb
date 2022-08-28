@@ -1,13 +1,30 @@
 class BookmarksController < ApplicationController
   def new
     @bookmark = Bookmark.new
+    @list = List.find(params[:list_id])
   end
 
   def create
-    @list = List.find(params(:list_id))
-    @bookmark = Bookmark.new(bookmark_params)
+    @list = List.find(params[:list_id])
+    @bookmark = Bookmark.new
+    @bookmark.list = @list
+    @params = bookmark_params
+    # need to ask about below code
+    @bookmark.movie_id = @params[:movie]
+    @bookmark.comment = @params[:comment]
+    @bookmark.list = @list
     @bookmark.save
-    redirect_to list_path(list)
+    if @bookmark.save
+      redirect_to list_path(@list)
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @bookmark = Bookmark.find(params[:id])
+    @bookmark.destroy
+    redirect_to list_path(@bookmark.list), status: :see_other
   end
 
   private
